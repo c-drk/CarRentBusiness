@@ -53,9 +53,10 @@ public class GenericTests {
     @Test
     public void testEquality() {
         // valor - tipo -  modelo
-        //(40USD/day for small cars, 60USD/day for sport cars, 100USD/day for SUV cars        
-        //assertEquals(new Car(40,"small","Dwarfy").getValue(), new Car(40,"small","Dwarfy").getValue(), 0.0);
-        //assertNotEquals(new Car(40,"small","Dwarfy").getValue(), new Car(60,"sport","Eveo").getValue(), 0.0);
+        //(40USD/day for small cars, 60USD/day for sport cars, 100USD/day for SUV cars   
+        //seguro 5 USD small, 7 USD sport, 10 USD suv
+        assertEquals(new Car(40,"small","Dwarfy",5).getValue(), new Car(40,"small","Dwarfy",5).getValue(), 0.0);
+        assertNotEquals(new Car(40,"small","Dwarfy",7).getValue(), new Car(60,"sport","Eveo",7).getValue(), 0.0);
         
         //assertNotEquals(new Persona("Carlos","Licto","1720820677",25).getCedula(), new Persona("Carlos","Licto","0500984751",32).getCedula(), 0.0);
         
@@ -75,9 +76,9 @@ public class GenericTests {
         precios.add(36.0);
         //assertEquals(precios,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getPreciosPorDia());
         
-        assertNotEquals(5,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getDescuentoRentDays());
-        assertNotEquals(15,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getDescuentoRentDays());
-        assertEquals(10,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getDescuentoRentDays());
+        assertNotEquals(5,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
+        assertNotEquals(15,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
+        assertEquals(10,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
       
         
     }
@@ -95,8 +96,8 @@ public class GenericTests {
         fechas.add("2017-09-17");
         fechas.add("2017-09-18");
         fechas.add("2017-09-19");
-        assertFalse(new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).isWeekday("2017-09-17"));
-        assertTrue(new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).isWeekday("2017-09-18"));
+        assertFalse(new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).isWeekday("2017-09-17"));
+        assertTrue(new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).isWeekday("2017-09-18"));
         
     }
 }
