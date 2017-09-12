@@ -50,7 +50,7 @@ public class Renta {
     
     public double getTotal(){
         getPreciosPorDia();
-        descuentoRentDays();
+        getDescuentoRentDays();
         return 0.0;
     }
     
@@ -81,7 +81,7 @@ public class Renta {
         }
     }
     
-    private int descuentoRentDays(){
+    public int getDescuentoRentDays(){
         int numdays=this.fechas.size();
         switch(numdays){
             case 0: case 1: case 2:

@@ -52,7 +52,7 @@ public class GenericTests {
      
     @Test
     public void testEquality() {
-        // valor - modelo -  tipo - marca
+        // valor - tipo -  modelo
         //(40USD/day for small cars, 60USD/day for sport cars, 100USD/day for SUV cars        
         //assertEquals(new Car(40,"small","Dwarfy").getValue(), new Car(40,"small","Dwarfy").getValue(), 0.0);
         //assertNotEquals(new Car(40,"small","Dwarfy").getValue(), new Car(60,"sport","Eveo").getValue(), 0.0);
@@ -71,6 +71,9 @@ public class GenericTests {
         precios.add(36.0);
         precios.add(36.0);
         assertEquals(precios,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getPreciosPorDia());
+        
+        assertEquals(5,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getDescuentoRentDays());
+        assertEquals(15,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy")).getDescuentoRentDays());
       
         
     }
