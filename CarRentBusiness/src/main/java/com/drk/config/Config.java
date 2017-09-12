@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
  */
   
 @Configuration
-@ComponentScan("com.outbottle")
+@ComponentScan("com.drk")
 @EnableWebMvc   
 public class Config extends WebMvcConfigurerAdapter {  
       
