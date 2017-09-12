@@ -14,11 +14,13 @@ public class Car {
     private int value;
     private String model;
     private String type;
+    private int seguro;
     
-    public Car(int value, String model, String type) {
+    public Car(int value, String model, String type,int seguro) {
         this.value = value;
         this.model = model;
         this.type = type;
+        this.seguro=seguro;
     }
     
     public int getValue(){
@@ -36,4 +38,8 @@ public class Car {
         return this.type;
     }
     
+    public int getSeguro(){
+        System.out.println("Seguro: "+this.seguro);
+        return this.seguro;
+    }
 }
