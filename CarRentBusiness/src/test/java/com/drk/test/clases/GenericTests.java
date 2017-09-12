@@ -55,11 +55,11 @@ public class GenericTests {
         // valor - tipo -  modelo
         //(40USD/day for small cars, 60USD/day for sport cars, 100USD/day for SUV cars   
         //seguro 5 USD small, 7 USD sport, 10 USD suv
-        assertEquals(new Car(40,"small","Dwarfy",5).getValue(), new Car(40,"small","Dwarfy",5).getValue(), 0.0);
-        assertNotEquals(new Car(40,"small","Dwarfy",7).getValue(), new Car(60,"sport","Eveo",7).getValue(), 0.0);
+        //assertEquals(new Car(40,"small","Dwarfy",5).getValue(), new Car(40,"small","Dwarfy",5).getValue(), 0.0);
+        //assertNotEquals(new Car(40,"small","Dwarfy",7).getValue(), new Car(60,"sport","Eveo",7).getValue(), 0.0);
         
         //assertNotEquals(new Persona("Carlos","Licto","1720820677",25).getCedula(), new Persona("Carlos","Licto","0500984751",32).getCedula(), 0.0);
-        
+        /*
         //Rentas
         //dias alquilados (domingo.lunes.martes)
         List<String> fechas = new ArrayList<>();
@@ -79,6 +79,26 @@ public class GenericTests {
         assertNotEquals(5,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
         assertNotEquals(15,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
         assertEquals(10,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(40,"small","Dwarfy",5)).getDescuentoRentDays());
+        */
+        
+        //Rentas, pruebas de valores
+        //dias alquilados (domingo.lunes.martes)
+        List<String> fechas = new ArrayList<>();
+        fechas.add("2017-09-17");
+        fechas.add("2017-09-18");
+        fechas.add("2017-09-19");
+        //caso de persona menor de 24 que no es miembro
+        assertEquals(180.6,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",24,false),new Car(60,"sport","Cherato",7)).getTotal(),0.1);
+        //caso de persona menor de 24 que si es miembro
+        assertEquals(172.62,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",24,true),new Car(60,"sport","Cherato",7)).getTotal(),0.1);
+        
+        //caso de persona mayor de 24 que no es miembro
+        assertEquals(159.6,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,false),new Car(60,"sport","Cherato",7)).getTotal(),0.1);
+        //caso de persona mayor de 24 que si es miembro
+        assertEquals(151.62,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",25,true),new Car(60,"sport","Cherato",7)).getTotal(),0.1);
+        
+        //caso de menor de edad
+        assertEquals(0.0,new Renta(fechas,new Cliente("Carlos","Licto","1720820677",17,false),new Car(60,"sport","Cherato",7)).getTotal(),0.1);
       
         
     }
