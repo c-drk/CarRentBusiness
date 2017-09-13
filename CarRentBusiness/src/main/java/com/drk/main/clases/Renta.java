@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONException;
+import org.primefaces.json.JSONObject;
 
 /**
  *
@@ -134,5 +137,50 @@ public class Renta {
             default:
                 return 15;
         }
+    }
+    
+    public String getJsonResponse() throws JSONException{
+        JSONArray myArray = new JSONArray();
+        JSONObject j = new JSONObject();
+        //Se verifica que sea adulto, caso contrario no realiza la operación
+        if(this.persona.esAdulto()){
+            this.subtotal=0;
+            //acumula el precio invidivual de dias de renta previamente calculado,
+            //es decir si es dia laboral menos 10% caso contrario precio estándar
+            getPreciosPorDia().forEach(precio ->{
+                this.subtotal+=precio;
+            });     
+            System.out.println("Subtotal: "+this.subtotal);
+            this.total=this.subtotal;
+            j.put("subtotal", this.subtotal);
+            //Se obtiene el descuento por dias consecutivos de renta
+            this.descuento=getDescuentoRentDays();
+            j.put("porcentajeDescuento", this.descuento);
+            System.out.println("Porcentaje de descuento: "+this.descuento);
+            //Al total de renta se le quita el valor del descuento
+            System.out.println("Descuento: "+this.total*(this.descuento/100));
+            this.total-=this.total*(this.descuento/100);
+            System.out.println("Total-Descuento: "+this.total);
+            //si el cliente es miembro se descuenta un 5% adicional
+            this.total=(this.persona.esMiembro()) ? this.total-(this.total*0.05) : this.total;
+            System.out.println("Total-Membresia: "+this.total);
+            //se toma la edad del cliente para aplicar el seguro, se obtiene el valor del seguro de 
+            //la clase Car y se multiplica por el número de dias 
+            this.seguro=(this.persona.getEdad()<25) ? 
+                this.fechas.size()*this.carro.getSeguro() : 0;
+            j.put("seguro", this.seguro);
+            System.out.println("Seguro: "+this.seguro);
+            //finalmente se añade el valor del seguro al total
+            this.total+=this.seguro;
+            j.put("total", this.total);
+            System.out.println("Total: "+this.total);
+        }
+        else{
+            j.put("subtotal", 0);
+            j.put("porcentajeDescuento", 0);
+            j.put("seguro", 0);
+            j.put("total", 0);
+        }
+        return j.toString();
     }
 }
