@@ -54,7 +54,7 @@
                         <label for="edad">Edad</label>
                     </div>
                     <div style="padding-top: 2%;">
-                        <input type="checkbox" class="filled-in" id="membresia" name="membresia"/>
+                        <input type="checkbox" class="filled-in" id="membresia" name="membresia" value="false"/>
                         <label for="membresia">¿Tienes membresía?</label>
                     </div>
                 </div>
@@ -98,7 +98,11 @@
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
                 selectYears: 15, // Creates a dropdown of 15 years to control year
-                format: 'dd-mm-yyyy' 
+                format: 'yyyy-mm-dd' 
+            });
+            $('#membresia').on('change', function() {
+                var val = this.checked ? 'true' : 'false';
+                $('#membresia').val(val);
             });
             function valida_form()
             {
@@ -147,7 +151,7 @@
                 else{
                   $('#dataCar').removeClass('invalid');
                 }
-                fecha=/^\d{1,2}\s.{5,}$/;
+                fecha=/^\d{1,4}-\d{1,2}-\d{1,2}$/;
                 if(!fecha.test($('#fechaI').val()))
                 {
                   $('#fechaI').addClass('invalid');
@@ -166,10 +170,12 @@
                 }
                 return status;
             }  
+            //función que permite serializar y crear un objeto json a partir del formulario serializado
             $.fn.serializeObject = function()
             {
                var o = {};
                var a = this.serializeArray();
+               
                $.each(a, function() {
                    if (o[this.name]) {
                        if (!o[this.name].push) {
@@ -185,33 +191,16 @@
             $('#submitJson').click(function() {
                 if(valida_form()){                    
                     alert("Generando Json...");
-                    /*
-                    $.ajax({
-                        contentType : 'application/json; charset=utf-8',
-                        type: "POST",
-                        url: "CarRentBusiness/submitForm/?nombre="+$('#nombre').val(),
-                        //dataType : 'json',
-                        //data: $("#myEntryForm").serialize(),
-                        //data: "nombre"+ $('#nombre').val(),
-                        success : function(response){
-                            alert("Response: Name: "+response);
-                        },
-                        error : function(e){
-                            alert("Error generando Json "+e);
-                            console.log(e);
-                        }
-                    });*/
                     console.log( JSON.stringify($("#myEntryForm").serializeObject()));
-                    $("#testdiv").text(JSON.stringify($("#myEntryForm").serializeObject()));
+                    $("#testdiv").html("Peticion Json: <br>"+JSON.stringify($("#myEntryForm").serializeObject()));
                     $.ajax({
-                        //data: JSON.stringify({'diagonal':"sss"})
                         contentType : 'application/json; charset=utf-8',
                         type: "POST",
-                        url: "CarRentBusiness/updateDisplay",
+                        url: "CarRentBusiness/requestRent",
                         dataType : 'json',
                         data: JSON.stringify($("#myEntryForm").serializeObject()),
                         success : function(response){
-                            alert(response);
+                            $("#testdiv").append("<br>Respuesta Json: <br>"+JSON.stringify(response));
                         },
                         error : function(e){
                             alert("Error generando Json "+e);
@@ -220,7 +209,7 @@
                     });
                 }
                 else{
-                    alert("Ingrese todos los campos");
+                    alert("Verifique que todos los campos estén ingresados correctamente");
                 }
             });
         });
